@@ -1,0 +1,14 @@
+/* Main CSS */
+
+body {
+    background-image: url(yellowbg.jpg);
+    background-size: cover;
+    
+}
+
+/* Navbar CSS */
+
+#navbar-image {
+    height: 50px;
+  
+  }
