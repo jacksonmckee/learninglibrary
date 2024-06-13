@@ -46,7 +46,73 @@ body {
 
 }
 
+.jumbotronindex .btn.btn-primary.btn-lg:focus{
+    box-shadow: 0 0 0 2px #c7a719;
+}
+
 .jumbotronindex .my-4 {
     background-color: white;
+
+}
+
+/* Sign in CSS */
+
+.dark-container {
+    background-color: rgb(52, 58, 64);
+    color: white;
+    text-align: center;
+    box-shadow: 0 0 0 2px white;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    max-width: 800px;
+
+}
+
+.dark-container .form-control {
+    background-color: rgb(52, 58, 64);
+    color: white;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.dark-container .form-control:focus {
+    box-shadow: 0 0 0 2px #c7a719;
+
+}
+
+.dark-container .btn-primary {
+    background-color: rgb(52, 58, 64);
+    color: white;
+    border: 2px solid white;
+
+}
+
+.dark-container .btn-primary:hover {
+    background-image: url(yellowbg.jpg);
+    background-size: 800%;
+
+}
+
+.dark-container .btn-primary:focus {
+    box-shadow: 0 0 0 2px #c7a719;
+
+}
+
+.dark-container .signup-link {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #c7a719;
+}
+
+.dark-container .signup-link a {
+    color: #c7a719;
+}
+
+.dark-container .signup-link a:hover {
+    text-decoration: underline;
 
 }
