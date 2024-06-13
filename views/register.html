@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LearningLibrary - Sign in!</title>
+  <title>LearningLibrary - Register!</title>
 
   <!-- Bootstrap Stylesheet -->
 
@@ -44,12 +44,20 @@
     </div>
   </nav>
 
-  <!-- Log in -->
+  <!-- Register -->
 
   <div class="container mt-5">
     <div class="bg-dark text-white dark-container">
-      <h1 class="display-4">Log in below...</h1>
+      <h1 class="display-4">Register with us below...</h1>
       <form>
+        <div class="form-group">
+            <label for="inputForename">Forename</label>
+            <input type="text" class="form-control" id="inputForename" placeholder="Your forename">
+          </div>
+          <div class="form-group">
+            <label for="inputSurname">Surname</label>
+            <input type="text" class="form-control" id="inputSurname" placeholder="Your surename">
+          </div>
         <div class="form-group">
           <label for="inputUsername">Username</label>
           <input type="text" class="form-control" id="inputUsername" placeholder="Your username">
@@ -60,9 +68,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-      <div class="signup-link">
-        <p><a href="register.html">Sign up here</a></p>
-      </div>
     </div>
 
 </body>
