@@ -106,10 +106,6 @@ app.get('/api-allpodcasts', (req, res) => {
     
 });
 
-const server = app.listen(PORT, () => {
-    console.log(`API started on port ${server.address().port}`);
-});
-
 // All data on all resources //
 
 app.get('/api-allresources', (req, res)=> { 
