@@ -29,38 +29,48 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="index.ejs">
             <img id="navbar-image" src="/public/logo.png" alt="LearningLibrary Logo">
             LearningLibrary</a>
         <div class="navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="signin.html">Register/Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="browsing.html">Browse Resources</a>
+                    <a class="nav-link" href="signin.ejs">Register/Log In</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="viewlearnlists.html">View Learnlists</a>
+                    <a class="nav-link" href="browsing.ejs">Browse Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="viewlearnlists.ejs">View Learnlists</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- View user's learnlists -->
+    <!-- Search for resources -->
 
     <div class="container mt-5">
         <div class="bg-dark text-white dark-container">
-            <h1 class="display-4">View a user's learnlist...</h1>
+            <h1 class="display-4">Search below...</h1>
             <form>
                 <div class="form-group">
-                    <select class="form-control" id="inputUserLearnlist">
-                        <option disabled selected>User</option>
-                        <option value="jacksonmckee">jacksonmckee</option>
-                        <option value="r.person123">r.person123</option>
-                        <option value="j.blog7">j.blog7</option>
-                        <option value="jane_doe11">jane_doe11</option>
-                        <option value="t-rich99">t-rich99</option>
+                    <select class="form-control" id="inputMediaType">
+                        <option disabled selected>Media type</option>
+                        <option value="video">Video</option>
+                        <option value="webpage">Webpage</option>
+                        <option value="book">Book</option>
+                        <option value="course">Online Course</option>
+                        <option value="podcast">Podcast</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="inputTopic">
+                        <option disabled selected>Topic</option>
+                        <option value="react.js">REACT.JS</option>
+                        <option value="html basics">HTML Basics</option>
+                        <option value="gardening">Gardening</option>
+                        <option value="basic spanish">Basic Spanish</option>
+                        <option value="plumbing">Plumbing</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
