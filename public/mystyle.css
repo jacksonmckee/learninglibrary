@@ -162,3 +162,10 @@ body {
     background-color: white;
 
 }
+
+/* Sign in failure CSS */
+
+h2 {
+    color: red;
+
+}

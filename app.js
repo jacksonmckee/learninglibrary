@@ -58,6 +58,44 @@ app.get("/signin", (req, res) => {
     res.render("signin")
 });
 
+// Sign in failure route //
+
+app.get("/signinfailure", (req, res) => {
+    res.render("signinfailure")
+});
+
+// Sign in function //
+
+app.post('/signin', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    // Checking that the user has completed the form //
+    if (!username || !password) {
+        return res.status(400).send('All fields must be filled in.')
+    }
+
+    // Checking the username and password against database //
+    db.query('SELECT * FROM user WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
+        if (error) {
+            console.error('Error logging you in:', error);
+            return res.status(500).send('Error logging you in, try again.');
+        } 
+
+        // If the account exists //
+        if (results.length > 0) {
+            console.log('Log in successful', results);
+
+            // Redirected to landing page //
+            res.redirect('/landing');
+
+        } else {
+            console.error('Error logging you in.')
+            res.redirect('/signinfailure');
+        }
+    });
+});
+
 // Browsing route // 
 
 app.get("/browsing", (req, res) => {
