@@ -74,30 +74,47 @@ app.post('/signin', (req, res) => {
 
     // Checking that the user has completed the form //
     if (!username || !password) {
-        return res.status(400).send('All fields must be filled in.')
+        return res.status(400).send('All fields must be filled in.');
     }
 
     // Checking the username and password against database //
-    db.query('SELECT * FROM user WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
+    db.query('SELECT * FROM user WHERE username = ?', [username], function (error, results, fields) {
         if (error) {
             console.error('Error logging you in:', error);
             return res.status(500).send('Error logging you in, try again.');
         }
 
-        // If the account exists //
+        // If the account exists... //
         if (results.length > 0) {
 
-            // A session will begin //
-            req.session.loggedin = true;
-            req.session.username = username;
+            // The hashed password is checked against original //
+            const hash = results[0].password;
+            bcrypt.compare(password, hash, (error, matches) => {
+                if (error) {
+                    console.error('Error logging you in:', error);
+                    return res.status(500).send('Error logging you in, try again.');
+                }
 
-            console.log('Log in successful', results);
+                // If it matches... //
+                if (matches) {
 
-            // Redirected to landing page //
-            res.redirect('/landing');
+                    // A session will begin //
+                    req.session.loggedin = true;
+                    req.session.username = username;
 
+                    console.log('Log in successful', results);
+
+                    // Redirected to landing page //
+                    res.redirect('/landing');
+                } else {
+
+                    // If it doesn't match...//
+                    console.error('Incorrect password, try again.');
+                    res.redirect('/signinfailure');
+                }
+            });
         } else {
-            console.error('Error logging you in.')
+            console.error('Username not found in database.');
             res.redirect('/signinfailure');
         }
     });
