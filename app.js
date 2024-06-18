@@ -162,6 +162,21 @@ app.post("/register", (req, res) => {
     );
 });
 
+// Log out button //
+
+app.get('/logout', (req, res) => {
+
+    req.session.destroy((error) => {
+        if (error) {
+            console.error('Error logging user out:', error);
+        } else {
+            console.log('User logged out.');
+        }
+        res.redirect('/');
+    });
+
+});
+
 // View learnlists route //
 
 app.get("/viewlearnlists", (req, res) => {
