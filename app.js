@@ -80,10 +80,15 @@ app.post('/signin', (req, res) => {
         if (error) {
             console.error('Error logging you in:', error);
             return res.status(500).send('Error logging you in, try again.');
-        } 
+        }
 
         // If the account exists //
         if (results.length > 0) {
+
+            // A session will begin //
+            req.session.loggedin = true;
+            req.session.username = username;
+
             console.log('Log in successful', results);
 
             // Redirected to landing page //
@@ -96,6 +101,17 @@ app.post('/signin', (req, res) => {
     });
 });
 
+// Function to check if a user has logged in, protects parts of website //
+
+function checkLogin(req, res, next) {
+    if (req.session.username) {
+        next();
+    } else {
+        console.error('You must sign in.')
+        res.redirect('/signin')
+    }
+}
+
 // Browsing route // 
 
 app.get("/browsing", (req, res) => {
@@ -104,7 +120,7 @@ app.get("/browsing", (req, res) => {
 
 // Landing page route //
 
-app.get("/landing", (req, res) => {
+app.get("/landing", checkLogin, (req, res) => {
     res.render("landing")
 });
 
