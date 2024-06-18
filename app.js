@@ -7,6 +7,8 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -143,23 +145,30 @@ app.post("/register", (req, res) => {
         return res.status(400).send('All fields must be filled in.');
     }
 
-    // Adding new user's information into database //
-    db.query(
-        'INSERT INTO user (forename, surname, username, password) VALUES (?, ?, ?, ?)',
-        [forename, surname, username, password],
-        (error, results) => {
-            if (error) {
-                console.error('Error creating your account:', error);
-                return res.status(500).send('Error creating your account, try again.');
-            }
-
-            // User registered //
-            console.log('Registration successful', results);
-
-            // When an account is created, redirected to sign in page //
-            res.redirect('/signin');
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) {
+            console.error('Error hashing password:', err);
+            return res.status(500).send('Error creating your account, try again.');
         }
-    );
+
+        // Adding new user's information into database //
+        db.query(
+            'INSERT INTO user (forename, surname, username, password) VALUES (?, ?, ?, ?)',
+            [forename, surname, username, hash],
+            (error, results) => {
+                if (error) {
+                    console.error('Error creating your account:', error);
+                    return res.status(500).send('Error creating your account, try again.');
+                }
+
+                // User registered //
+                console.log('Registration successful', results);
+
+                // When an account is created, redirected to sign in page //
+                res.redirect('/signin');
+            }
+        );
+    });
 });
 
 // Log out button //
