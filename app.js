@@ -101,6 +101,7 @@ app.post('/signin', (req, res) => {
                     // A session will begin //
                     req.session.loggedin = true;
                     req.session.username = username;
+                    req.session.userID = results[0].user_id;
 
                     console.log('Log in successful', results);
 
@@ -207,6 +208,34 @@ app.get('/logout', (req, res) => {
 
 app.get("/viewlearnlists", (req, res) => {
     res.render("viewlearnlists")
+});
+
+// Delete account function //
+
+app.post('/deleteaccount', (req, res) => {
+    const userId = req.session.userID;
+
+    console.log('Deleting user with ID:', userId);
+
+    // Delete user from database //
+    const query = `DELETE FROM user WHERE user_id = ?`;
+    db.query(query, [userId], (error, results, fields) => {
+        if (error) {
+            console.error('Error deleting user:', error);
+            return res.status(500).send('Error deleting user');
+        }
+
+        console.log('Account deletion successful', results);
+
+        // Destroy the session //
+        req.session.destroy((error) => {
+            if (error) {
+                console.error('Error destroying session:', error);
+            } else {
+                res.redirect('/');
+            }
+        });
+    });
 });
 
 
