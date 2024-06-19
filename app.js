@@ -48,6 +48,22 @@ db.connect((err) => {
     console.log("connected to local mysql db using .env properties");
 });
 
+const mediaMap = {
+    1: 'Video',
+    2: 'Webpage',
+    3: 'Online Course',
+    4: 'Book',
+    5: 'Podcast'
+};
+
+const topicMap = {
+    1: 'REACT.JS',
+    2: 'HTML Basics',
+    3: 'Gardening',
+    4: 'Basic Spanish',
+    5: 'Plumbing'
+};
+
 // Index route //
 
 app.get("/", (req, res) => {
@@ -144,9 +160,20 @@ app.get("/browsing", (req, res) => {
             console.error('Error fetching resources:', err);
             return res.status(500).send('Error fetching resources');
         }
-        res.render('browsing', {
-            resourceData: result
-        });
+        res.render('browsing', { resourceData: result });
+    });
+});
+
+// Individual card details route
+
+app.get('/resourcedetails/:resourceId', (req, res) => {
+    let resourceId = req.params.resourceId;
+    let getresource = `SELECT * FROM resource WHERE resource_id=?`;
+
+    db.query(getresource, [resourceId], (err, data) => {
+        if (err) throw err;
+
+        res.render('resourcedetails', { resource: data[0], mediaMap: mediaMap, topicMap: topicMap });
     });
 });
 

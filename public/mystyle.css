@@ -202,3 +202,13 @@ body.browsing{
     box-shadow: 0 0 0 2px #c7a719;
 
 }
+
+/* Individual resource CSS */
+
+h2 {
+    color: white;
+}
+
+.container{
+    text-align: center;
+}
