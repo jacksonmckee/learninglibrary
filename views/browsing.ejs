@@ -25,7 +25,7 @@
 
 </head>
 
-<body>
+<body class="browsing">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -51,7 +51,7 @@
 
     <div class="container mt-5">
         <div class="bg-dark text-white dark-container">
-            <h1 class="display-4">Search below...</h1>
+            <h1 class="display-4">Filter below...</h1>
             <form>
                 <div class="form-group">
                     <select class="form-control" id="inputMediaType">
@@ -75,6 +75,25 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Container displaying resources -->
+
+    <div class="container mt-5">
+        <div class="row" id="resourceRow">
+            <% resourceData.forEach((resource) => { %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= resource.resource_name %></h5>
+                            <p class="card-text"><%= resource.resource_desc %></p>
+                            <p class="card-text"><%= resource.resource_likes %> Likes</p>
+                            <a class="btn btn-primary" href="#">View</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
         </div>
     </div>
 

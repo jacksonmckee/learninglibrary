@@ -135,7 +135,19 @@ function checkLogin(req, res, next) {
 // Browsing route // 
 
 app.get("/browsing", (req, res) => {
-    res.render("browsing")
+
+    // Displays all resources //
+    let sql = 'SELECT * FROM resource';
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Error fetching resources:', err);
+            return res.status(500).send('Error fetching resources');
+        }
+        res.render('browsing', {
+            resourceData: result
+        });
+    });
 });
 
 // Landing page route //
