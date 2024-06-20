@@ -277,6 +277,43 @@ app.post('/deleteaccount', (req, res) => {
     });
 });
 
+// Create learnlist route //
+
+app.get("/createlearnlist", (req, res) => {
+    res.render("createlearnlist")
+});
+
+// Create a learnlist function //
+
+app.post("/createlearnlist", (req, res) => {
+    const learnlistName = req.body.learnlistName;
+    const learnlistDescription  = req.body.learnlistDescription;
+
+    const userId = req.session.userID;
+
+    // Checking that the user has completed the form //
+    if (!learnlistName || !learnlistDescription) {
+        return res.status(400).send('All fields must be filled in.');
+    }
+
+        // Adding new learnlist information into database //
+        db.query(
+            'INSERT INTO user_learnlist (learnlist_name, learnlist_desc, user_id, learnlist_likes) VALUES (?, ?, ?, NULL)',
+            [learnlistName, learnlistDescription, userId],
+            (error, results) => {
+                if (error) {
+                    console.error('Error creating your learnlist:', error);
+                    return res.status(500).send('Error creating your learnlist, try again.');
+                }
+
+                // Learnlist created //
+                console.log('Learnlist created!', results);
+
+                // After learnlist is created, redirected to landing. //
+                res.redirect('/landing');
+            }
+        );
+    });
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
