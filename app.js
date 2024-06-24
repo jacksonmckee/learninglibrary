@@ -279,7 +279,7 @@ app.post('/deleteaccount', (req, res) => {
 
 // Create learnlist route //
 
-app.get("/createlearnlist", (req, res) => {
+app.get("/createlearnlist", checkLogin, (req, res) => {
     res.render("createlearnlist")
 });
 
@@ -333,8 +333,28 @@ app.post("/createlearnlist", (req, res) => {
 
 // Manage learnlist route //
 
-app.get("/managelearnlist", (req, res) => {
+app.get("/managelearnlist", checkLogin, (req, res) => {
     res.render("managelearnlist")
+});
+
+// Delete learnlist function //
+
+app.post('/deletelearnlist', (req, res) => {
+    const userId = req.session.userID;
+
+    console.log('Deleting learnlist belonging to user', userId);
+
+    // Delete learnlist from database //
+    const query = `DELETE FROM user_learnlist WHERE user_id = ?`;
+    db.query(query, [userId], (error, results, fields) => {
+        if (error) {
+            console.error('Error deleting learnlist:', error);
+            return res.status(500).send('Error deleting learnlist');
+        }
+
+        console.log('Learnlist deletion successful', results);
+        res.redirect('/landing');
+    });
 });
 
 app.listen(port, () => {
