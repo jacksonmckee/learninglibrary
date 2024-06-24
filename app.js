@@ -296,6 +296,21 @@ app.post("/createlearnlist", (req, res) => {
         return res.status(400).send('All fields must be filled in.');
     }
 
+    // Querying database to see if user has a learnlist //
+    db.query(
+        'SELECT * FROM user_learnlist  WHERE user_id = ?',
+        [userId],
+        (error, results) => {
+            if (error) {
+                console.error('Error checking for learnlist:', error);
+                return res.status(500).send('Error checking for learnlist, try again.');
+            }
+
+            if (results.length > 0){
+                console.log('There is already a learnlist for user', userId);
+                return res.status(400).send(`There is already a learnlist for user ${userId}`);
+            }
+
         // Adding new learnlist information into database //
         db.query(
             'INSERT INTO user_learnlist (learnlist_name, learnlist_desc, user_id, learnlist_likes) VALUES (?, ?, ?, NULL)',
@@ -314,6 +329,7 @@ app.post("/createlearnlist", (req, res) => {
             }
         );
     });
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
