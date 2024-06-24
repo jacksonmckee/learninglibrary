@@ -331,6 +331,12 @@ app.post("/createlearnlist", (req, res) => {
     });
 });
 
+// Manage learnlist route //
+
+app.get("/managelearnlist", (req, res) => {
+    res.render("managelearnlist")
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
