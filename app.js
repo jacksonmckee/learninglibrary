@@ -357,6 +357,57 @@ app.post('/deletelearnlist', (req, res) => {
     });
 });
 
+// Change learnlist name route //
+
+app.get("/changelearnlistname", checkLogin, (req, res) => {
+    res.render("changelearnlistname")
+});
+
+app.post("/newlearnlistname", (req, res) => {
+    const newLearnlistName = req.body.newLearnlistName;
+    const userId = req.session.userID;
+
+    if (!newLearnlistName){
+        return res.status(400).send('You must fill in the form.');
+    }
+
+    // Finds the learnlist in the database //
+
+    db.query(
+        'SELECT * FROM  user_learnlist WHERE user_id = ?',
+        [userId],
+        (error, results) => {
+            if (error){
+                console.error('Error finding learnlist:', error);
+                return res.status(500).send('Error finding learnlist, try again.');
+            }
+
+            if (results.length === 0){
+                console.log('No learnlist found for user', userId);
+                return res.status(400).send(`No learnlist found for user ${userId}`);
+            }
+
+            // Changing name in database //
+
+            db.query(
+                'UPDATE user_learnlist SET learnlist_name = ? WHERE user_id = ?',
+                [newLearnlistName, userId], 
+                (error, results) => {
+                    if (error){
+                        console.error('Error chaning learnlist name', error);
+                        return res.status(500).send('Error changing learnlist name, try again.');
+                    }
+
+                    // Learnlist name changed //
+                    console.log('Learnlist name updated!', results);
+
+                    res.redirect('/landing');
+                }
+            );
+        }
+    );
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
