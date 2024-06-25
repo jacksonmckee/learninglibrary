@@ -151,11 +151,36 @@ function checkLogin(req, res, next) {
 // Browsing route // 
 
 app.get("/browsing", (req, res) => {
+    const search = req.query.search;
+    const mediaType = req.query.mediaType;
+    const topic = req.query.topic;
+    const sort = req.query.sort;
 
-    // Displays all resources //
-    let sql = 'SELECT * FROM resource';
+    let query = 'SELECT * FROM resource WHERE 1=1';
 
-    db.query(sql, (err, result) => {
+    // Adding the filters from the form //
+
+    if (search) {
+        query += ` AND resource_name LIKE '%${search}%'`;
+    }
+
+    if (mediaType) {
+        query += ` AND media_id = ${mediaType}`;
+    }
+
+    if (topic) {
+        query += ` AND topic_id = ${topic}`;
+    }
+
+    if (sort) {
+        if (sort === 'most liked') {
+            sql += ` ORDER BY resource_likes DESC`;
+        } else if (sort === 'a-z') {
+            sql += ` ORDER BY resource_name ASC`;
+        }
+    }
+
+    db.query(query, (err, result) => {
         if (err) {
             console.error('Error fetching resources:', err);
             return res.status(500).send('Error fetching resources');
