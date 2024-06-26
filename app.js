@@ -174,9 +174,9 @@ app.get("/browsing", (req, res) => {
 
     if (sort) {
         if (sort === 'most liked') {
-            sql += ` ORDER BY resource_likes DESC`;
+            query += ` ORDER BY resource_likes DESC`;
         } else if (sort === 'a-z') {
-            sql += ` ORDER BY resource_name ASC`;
+            query += ` ORDER BY resource_name ASC`;
         }
     }
 
@@ -271,7 +271,24 @@ app.get('/logout', (req, res) => {
 // View learnlists route //
 
 app.get("/viewlearnlists", (req, res) => {
-    res.render("viewlearnlists")
+    const userLearnlist = req.query.userLearnlist;
+
+    const query = `SELECT * 
+                    FROM resource 
+                    JOIN user_learnlist_list 
+                    ON resource.resource_id = user_learnlist_list.resource_id 
+                    JOIN user_learnlist 
+                    ON user_learnlist_list.learnlist_id = user_learnlist.learnlist_id 
+                    WHERE user_learnlist_list.learnlist_id = ?`;
+
+    db.query(query, [userLearnlist], (error, results, fields) => {
+        if (error) {
+            console.error('Error fetcthing user learnlist:', error);
+            return res.status(500).send('Error fetching user learnlist.')
+        }
+        res.render("viewlearnlists", { resourceData: results });
+    });
+
 });
 
 // Delete account function //

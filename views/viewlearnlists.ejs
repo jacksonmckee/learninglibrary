@@ -52,15 +52,15 @@
     <div class="container mt-5">
         <div class="bg-dark text-white dark-container">
             <h1 class="display-4">View a user's learnlist...</h1>
-            <form>
+            <form action="/viewlearnlists" method="GET">
                 <div class="form-group">
-                    <select class="form-control" id="inputUserLearnlist">
+                    <select class="form-control" id="inputUserLearnlist" name="userLearnlist">
                         <option disabled selected>User</option>
-                        <option value="jacksonmckee">jacksonmckee</option>
-                        <option value="r.person123">r.person123</option>
-                        <option value="j.blog7">j.blog7</option>
-                        <option value="jane_doe11">jane_doe11</option>
-                        <option value="t-rich99">t-rich99</option>
+                        <option value="1">jacksonmckee</option>
+                        <option value="2">r.person123</option>
+                        <option value="3">j.blog7</option>
+                        <option value="4">jane_doe11</option>
+                        <option value="5">t-rich99</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
@@ -68,6 +68,24 @@
         </div>
     </div>
 
+    <!-- Container displaying resources -->
+
+    <div class="container mt-5">
+        <div class="row" id="resourceRow">
+            <% resourceData.forEach((resource) => { %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= resource.resource_name %></h5>
+                            <p class="card-text"><%= resource.resource_desc %></p>
+                            <p class="card-text"><%= resource.resource_likes %> Likes</p>
+                            <a class="btn btn-primary" href="/resourcedetails/<%= resource.resource_id %>">View</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
 </body>
 
 </html>
