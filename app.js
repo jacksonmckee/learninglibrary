@@ -512,6 +512,38 @@ app.post("/unlike/:learnlistId", checkLogin, (req, res) => {
     });
 });
 
+// All learnlists //
+
+app.get("/alllearnlists", checkLogin, (req, res) => {
+    const query = `SELECT * from user_learnlist`;
+
+    db.query(query, (error, results, fields) => {
+        if (error){
+            console.error('Error while fetching learnlists:', error);
+            return res.status(500).send('Error while fetching learnlists')
+        }
+        res.render("alllearnlists", { learnlistData: results });
+    });
+});
+
+// Like learnlist from all learnlists page //
+
+app.post("/like/:learnlistId", checkLogin, (req, res) => {
+    const userId = req.session.userID;
+    const learnlistId = req.params.learnlistId;
+
+    const query = `INSERT INTO liked (user_id, learnlist_id) VALUES (?, ?)`;
+
+    db.query(query, [userId, learnlistId], (error, results, fields) => {
+        if (error){
+            console.error('Error while liking:', error);
+            return res.status(500).send('Error while liking.')
+        }
+        console.log('User', userId, 'liked learnlist', learnlistId);
+        res.redirect('/alllearnlists')
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearningLibrary - Landing!</title>
+    <title>LearningLibrary - All learnlists!</title>
 
     <!-- Bootstrap Stylesheet -->
 
@@ -47,23 +47,27 @@
         </div>
     </nav>
 
-    <!-- Landing options -->
+    <!-- All Learnlists -->
 
-    <div class="jumbotronlanding">
-        <h1 class="display-4">Welcome to the LearningLibrary...</h1>
-        <p class="lead">Come learn with us today!</p>
-        <hr class="my-4">
-        <a class="btn btn-primary btn-lg" href="/createlearnlist" role="button">Create a learnlist</a>
-        <a class="btn btn-primary btn-lg" href="/managelearnlist" role="button">Manage your learnlist</a>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Review member's learnlists</a>
-        <a class="btn btn-primary btn-lg" href="/likes" role="button">Your liked learnlists</a>
-        <a class="btn btn-primary btn-lg" href="/alllearnlists" role="button">View all learnlists</a>
-        <a class="btn btn-primary btn-lg" href="/logout" role="button">Log out</a>
-        <form action="/deleteaccount" method="POST">
-            <button type="submit" class="btn btn-primary btn-lg">Delete account</button>
-        </form>
+    <div class="container mt-5">
+        <div class="row" id="resourceRow">
+            <% learnlistData.forEach((learnlist) => { %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= learnlist.learnlist_name %></h5>
+                            <p class="card-text"><%= learnlist.learnlist_desc %></p>
+                            <p class="card-text"><%= learnlist.learnlist_likes %> Likes</p>
+                            <a class="btn btn-primary" href="/likedlearnlist/<%= learnlist.learnlist_id %>">View</a>
+                            <form action="/like/ <%= learnlist.learnlist_id %>" method="POST">
+                                <button type="submit" class="btn btn-primary">Like</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
     </div>
-
 </body>
 
 </html>
