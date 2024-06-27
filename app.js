@@ -450,6 +450,29 @@ app.post("/newlearnlistname", (req, res) => {
     );
 });
 
+app.get("/likes", checkLogin, (req, res) => {
+    const userId = req.session.userID;
+
+    const query = `SELECT *
+                    FROM resource 
+                    JOIN liked 
+                    ON resource.resource_id = liked.resource_id 
+                    WHERE liked.user_id = ?`;
+
+    db.query(query, [userId], (error, results, fields) => {
+        if (error){
+            console.error('Error fetching user liked list:', error);
+            return res.status(500).send('Error fetching user liked list.')
+        }
+
+    if (results.length === 0) {
+        console.log('No liked resources found for user:', userId);
+    }
+        res.render("likes", { resourceData: results } );
+    });
+
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
