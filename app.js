@@ -485,13 +485,30 @@ app.get("/likedlearnlist/:learnlistId", checkLogin, (req, res) => {
                     JOIN user_learnlist_list
                     ON resource.resource_id = user_learnlist_list.resource_id
                     WHERE learnlist_id = ?`;
-                    
+
     db.query(query, [learnlistId], (error, results, fields) => {
         if (error){
             console.error('Error fetching learnlist:', error);
             return res.status(500).send('Error fetching learnlist.')
         }
         res.render("likedlearnlist", { resourceData: results });
+    });
+});
+
+// Unlike learnlist //
+
+app.post("/unlike/:learnlistId", checkLogin, (req, res) => {
+    const userId = req.session.userID;
+    const learnlistId = req.params.learnlistId;
+
+    const query = `DELETE FROM liked WHERE user_id = ? AND learnlist_id = ?`;
+
+    db.query(query, [userId, learnlistId], (error, results, fields) => {
+        if (error){
+            console.error('Error while unliking:', error);
+            return res.status(500).send('Error while unliking.')
+        }
+        res.redirect('/likes')
     });
 });
 

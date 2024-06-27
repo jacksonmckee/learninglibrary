@@ -1,0 +1,453 @@
+﻿-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 27, 2024 at 05:33 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `learninglibrary_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `liked`
+--
+
+CREATE TABLE `liked` (
+  `liked_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `learnlist_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `liked`
+--
+
+INSERT INTO `liked` (`liked_id`, `user_id`, `learnlist_id`) VALUES
+(6, 17, 4),
+(7, 17, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `media_type`
+--
+
+CREATE TABLE `media_type` (
+  `media_id` int(11) NOT NULL,
+  `media_type_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `media_type`
+--
+
+INSERT INTO `media_type` (`media_id`, `media_type_name`) VALUES
+(1, 'Video'),
+(2, 'Webpage'),
+(3, 'Online Course'),
+(4, 'Book'),
+(5, 'Podcast');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resource`
+--
+
+CREATE TABLE `resource` (
+  `resource_id` int(11) NOT NULL,
+  `media_id` int(11) NOT NULL,
+  `resource_name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `topic_id` int(11) NOT NULL,
+  `resource_desc` varchar(255) NOT NULL,
+  `resource_likes` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resource`
+--
+
+INSERT INTO `resource` (`resource_id`, `media_id`, `resource_name`, `url`, `topic_id`, `resource_desc`, `resource_likes`) VALUES
+(1, 2, 'Official React Documentation', 'https://legacy.reactjs.org/docs/getting-started.html', 1, 'The official React documentation is an excellent starting point for understanding the basics and advanced concepts of React.', 24),
+(2, 3, 'React for Beginners by Wes Bos', 'https://reactforbeginners.com/', 1, 'A premium course by Wes Bos that teaches you React through hands-on projects.', 11),
+(3, 3, 'Full-Stack Open 2023 - Part 1: Introduction to React', 'https://fullstackopen.com/en/part1', 1, 'A free, comprehensive course that covers React basics as part of a larger full-stack curriculum.', 8),
+(4, 3, 'React - The Complete Guide (incl Hooks, React Router, Redux) ', 'https://www.udemy.com/course/react-the-complete-guide-incl-redux/', 1, 'A highly-rated comprehensive course on Udemy covering React from basics to advanced concepts.', 3),
+(5, 4, 'Learning React by Eve Porcello and Alex Banks', 'https://www.oreilly.com/library/view/learning-react-2nd/9781492051718/', 1, 'A practical guide to learning React, available as an e-book on O\'Reilly.', 1),
+(6, 1, 'React Tutorial for Beginners by freeCodeCamp', 'https://www.youtube.com/watch?v=DLX62G4lc44', 1, 'A YouTube video tutorial by freeCodeCamp that walks you through building a React app from scratch.', 19),
+(7, 3, 'Frontend Masters - Complete Intro to React, v6', 'https://frontendmasters.com/courses/complete-react-v8/', 1, 'An in-depth course on React by Brian Holt available on Frontend Masters.', 9),
+(8, 5, 'React Podcast by Michael Jackson and David Price', 'https://reactpodcast.simplecast.com/', 1, 'A podcast series dedicated to React and its ecosystem, featuring interviews with industry experts.', 2),
+(9, 2, 'React Cheat Sheet', 'https://devhints.io/react', 1, 'A handy cheat sheet that summarizes React concepts, APIs, and best practices.', 1),
+(10, 1, 'React Crash Course 2021 by Traversy Media', 'https://www.youtube.com/watch?v=w7ejDZ8SWv8', 1, 'A comprehensive crash course on React.js by Traversy Media, covering the fundamentals and some advanced topics, ideal for beginners and intermediate learners.', 1),
+(11, 2, 'Mozilla Developer Network (MDN) - HTML: HyperText Markup Language', 'https://developer.mozilla.org/en-US/docs/Web/HTML', 2, 'Comprehensive documentation and tutorials on HTML from Mozilla, suitable for all skill levels.', 6),
+(12, 3, 'HTML for Beginners by freeCodeCamp', 'https://www.freecodecamp.org/learn/responsive-web-design/basic-html-and-html5/', 2, 'A free, interactive course on HTML offered by freeCodeCamp, covering the basics and more advanced concepts.', 12),
+(13, 2, 'W3Schools - HTML Tutorial', 'https://www.w3schools.com/html/', 2, 'An easy-to-follow HTML tutorial with examples and exercises, suitable for beginners.', 9),
+(14, 1, 'HTML Crash Course for Beginners by Traversy Media', 'https://www.youtube.com/watch?v=UB1O30fR-EE', 2, 'A comprehensive crash course on HTML by Traversy Media, perfect for beginners.', 12),
+(15, 3, 'Coursera - HTML, CSS, and Javascript for Web Developers', 'https://www.coursera.org/learn/html-css-javascript-for-web-developers', 2, 'A course offered by Johns Hopkins University on Coursera, covering HTML, CSS, and JavaScript.', 23),
+(16, 2, 'HTML5 Rocks - Introduction to HTML5', 'http://www.html5rocks.com/en/', 2, 'A resource for developers looking to learn about the new features and capabilities of HTML5.', 4),
+(17, 4, 'HTML & CSS: Design and Build Websites by Jon Duckett', 'https://www.amazon.com/HTML-CSS-Design-Build-Websites/dp/1118008189', 2, 'A popular book that provides an easy-to-follow introduction to HTML and CSS, ideal for beginners.', 3),
+(18, 2, 'HTML.com - Learn HTML', 'https://html.com/', 2, 'A comprehensive guide to learning HTML, including tutorials and examples.', 2),
+(19, 3, 'HTML and HTML5: The Basics by EdX', 'https://www.edx.org/course/html5-and-css-fundamentals', 2, 'An introductory course on HTML5 and CSS fundamentals offered by W3C on EdX.', 5),
+(20, 5, 'HTML All The Things - Podcast', 'https://htmlallthethings.com/', 2, 'A podcast focused on web development, including discussions on HTML, CSS, JavaScript, and more.', 8),
+(21, 2, 'Royal Horticultural Society (RHS) - Gardening Advice', 'https://www.rhs.org.uk/advice', 3, 'Comprehensive gardening advice from the Royal Horticultural Society, covering various topics from plant care to garden design.', 12),
+(22, 1, 'Garden Answer - YouTube Channel', 'https://www.youtube.com/user/gardenanswer', 3, 'A popular YouTube channel featuring gardening tutorials, tips, and ideas for all skill levels.', 9),
+(23, 3, 'Master Gardener Program by University of California Agriculture and Natural Resources', 'http://mg.ucanr.edu/', 3, 'A comprehensive program offering gardening courses and resources, aimed at educating and training gardeners.', 4),
+(24, 2, 'The Spruce - Gardening Basics', 'https://www.thespruce.com/gardening-4127764', 3, 'A website offering practical advice and tips on various aspects of gardening, from planting to pest control.', 16),
+(25, 2, 'Epic Gardening', 'https://www.epicgardening.com/', 3, 'A comprehensive gardening resource with articles, videos, and guides on growing plants, gardening techniques, and DIY projects.', 7),
+(26, 2, 'BBC Gardeners\' World - Gardening Guides', 'https://www.gardenersworld.com/how-to/', 3, 'A collection of gardening guides and tutorials from the BBC\'s Gardeners\' World, suitable for gardeners of all levels.', 2),
+(27, 5, 'The Joe Gardener Show - Podcast', 'https://joegardener.com/podcast/', 3, 'A podcast series hosted by Joe Lamp\'l, offering gardening advice, interviews with experts, and tips for sustainable gardening.', 14),
+(28, 2, 'American Horticultural Society (AHS) - Gardening Resources', 'https://ahsgardening.org/gardening-resources/', 3, 'A range of gardening resources and educational materials provided by the American Horticultural Society.', 6),
+(29, 2, 'Garden Myths by Robert Pavlis', 'https://www.gardenmyths.com/', 3, 'A blog debunking common gardening myths and providing scientifically-backed gardening advice.', 22),
+(30, 2, 'Gardener\'s Supply Company - Learn and Grow', 'https://www.gardeners.com/how-to/', 3, 'A resource center offering gardening articles, how-to videos, and expert tips for gardeners of all levels.', 8),
+(31, 3, 'Duolingo - Learn Spanish', 'https://www.duolingo.com/course/es/en/Learn-Spanish', 4, 'A popular, gamified language learning app offering Spanish courses for beginners.', 36),
+(32, 2, 'BBC Languages - Spanish', 'http://www.bbc.co.uk/languages/spanish/', 4, 'A comprehensive resource with free online courses, audio, video, games, and vocabulary for learning Spanish.\r\n', 12),
+(33, 2, 'SpanishDict - Learn Spanish', 'https://www.spanishdict.com/learn', 4, 'An extensive resource offering grammar lessons, vocabulary, quizzes, and interactive exercises.', 13),
+(34, 5, 'Coffee Break Spanish - Podcast', 'https://radiolingua.com/coffeebreakspanish/', 4, 'A podcast series providing bite-sized Spanish lessons, suitable for beginners.', 11),
+(36, 3, 'FluentU - Learn Spanish', 'https://www.fluentu.com/en/spanish/', 4, 'A language learning platform that uses real-world videos, like music videos and news, to teach Spanish.', 11),
+(37, 5, 'SpanishPod101', 'https://www.spanishpod101.com/', 4, 'An online platform offering audio and video lessons, flashcards, and community forums for learning Spanish.', 10),
+(38, 3, 'edX - Basic Spanish 1: Getting Started', 'https://www.edx.org/course/basic-spanish-1-getting-started', 4, 'A free course on edX by Universitat Politècnica de Valencia, covering the basics of Spanish.', 10),
+(39, 3, 'Busuu - Learn Spanish Online', 'https://www.busuu.com/en/course/learn-spanish-online', 4, 'A language learning platform offering structured Spanish courses, including speaking practice with native speakers.', 6),
+(40, 3, 'Memrise - Spanish (Spain) 1', 'https://www.memrise.com/course/2021577/spanish-spain-1/', 4, 'A language learning app that offers courses in Spanish with a focus on vocabulary, phrases, and pronunciation through interactive lessons.', 18),
+(41, 2, 'Family Handyman - Plumbing', 'https://www.familyhandyman.com/project-category/plumbing/', 5, 'A comprehensive collection of articles and tutorials on various plumbing topics, from repairs to installations.', 10),
+(42, 2, 'This Old House - Plumbing', 'https://www.thisoldhouse.com/plumbing', 5, 'A resource offering expert advice, tips, and how-to guides on a wide range of plumbing projects.', 19),
+(43, 1, 'YouTube Channel - Plumbing with Tim', 'https://www.youtube.com/channel/UCDJ1mD7R4WEZFP0s82e9tqw', 5, 'A YouTube channel featuring videos on various plumbing repairs, installations, and tips.', 17),
+(44, 2, 'Home Repair Tutor - Plumbing', 'https://homerepairtutor.com/plumbing/', 5, 'A website offering practical and easy-to-follow plumbing tutorials and repair tips.\r\n', 5),
+(45, 2, 'DIY Network - Plumbing How-Tos', 'https://www.diynetwork.com/how-to/rooms-and-spaces/plumbing', 5, 'A collection of step-by-step plumbing guides and videos for various home improvement projects.', 13),
+(46, 3, 'Coursera - Introduction to Plumbing', 'https://www.coursera.org/learn/introduction-to-plumbing', 5, 'A free online course that covers the basics of plumbing systems and repairs.', 7),
+(47, 1, 'YouTube Channel - PlumberParts', 'https://www.youtube.com/user/plumberparts', 5, 'A YouTube channel with a wide range of plumbing tutorials, tips, and tricks from a professional plumber.', 0),
+(48, 4, 'The Ultimate Guide to Plumbing by Merle Henkenius', 'https://www.amazon.com/Ultimate-Guide-Plumbing-Updated-Projects/dp/1580117886', 5, 'A comprehensive book covering plumbing projects, repairs, and maintenance.', 12),
+(49, 2, 'The Plumbing Info - How-To Guides', 'https://www.theplumbinginfo.com/plumbing-how-to-guides/', 5, 'A website offering in-depth plumbing how-to guides, covering a wide range of topics from basic repairs to advanced installations.', 1),
+(50, 4, 'Plumbing 1-2-3 by The Home Depot', 'https://www.amazon.com/Plumbing-1-2-3-Depot-Home/dp/069621184X', 5, 'A comprehensive guide from The Home Depot covering a wide range of plumbing projects and repairs, with step-by-step instructions and illustrations.', 3),
+(51, 4, 'Easy Spanish Step-By-Step by Barbara Bregstein', 'https://www.amazon.com/Easy-Spanish-Step-Day/dp/0071463380', 4, 'A straightforward, step-by-step approach to learning Spanish, focusing on grammar and vocabulary through a series of clear and concise lessons. Ideal for beginners looking to build a strong foundation in the language.', 17);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `review`
+--
+
+CREATE TABLE `review` (
+  `review_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `learnlist_id` int(11) NOT NULL,
+  `review_comment` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`review_id`, `user_id`, `learnlist_id`, `review_comment`) VALUES
+(1, 1, 4, 'Jane\'s list is not bad.'),
+(2, 2, 3, 'I hope their Spanish is better than mine!'),
+(3, 5, 2, 'I need to learn HTML.'),
+(4, 3, 2, 'This looks like a fun list!'),
+(5, 5, 1, 'Some good gardening videos there.'),
+(6, 4, 1, 'Plumbing looks difficult, good luck!'),
+(7, 5, 3, 'You teach your kids gardening?'),
+(8, 3, 4, 'React looks tricky, I must have a try.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `topic`
+--
+
+CREATE TABLE `topic` (
+  `topic_id` int(11) NOT NULL,
+  `topic_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `topic`
+--
+
+INSERT INTO `topic` (`topic_id`, `topic_name`) VALUES
+(1, 'REACT.JS'),
+(2, 'HTML Basics'),
+(3, 'Gardening'),
+(4, 'Basic Spanish'),
+(5, 'Plumbing');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL,
+  `forename` varchar(255) NOT NULL,
+  `surname` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `forename`, `surname`, `username`, `password`) VALUES
+(1, 'Jackson', 'Mckee', 'jacksonmckee', 'webdev1'),
+(2, 'Random', 'Person', 'r.person123', 'password123'),
+(3, 'Joe', 'Blog', 'j.blog7', 'software9'),
+(4, 'Jane', 'Doe', 'jane_doe11', 'drowssap123'),
+(5, 'Tom', 'Richard', 't-rich99', 'mypassword'),
+(6, 'Test1', 'Test1', 'Testing1', 'ThisIsATest'),
+(7, 'Test2', 'Test2', 'TestingTheHash', 'hopefullyahashedpassword'),
+(8, 'Test3', 'Test3', 'TestingHashAfterAChange', '$2a$10$CktyEKBOCbhzWi.ubjezDuc3g6qL9bSl77QDk46WJDrfg1K1Wyoku'),
+(17, 'Test5', 'Test5', 'Test5', '$2a$10$Ts9gHaObc2TXCeN0TKJQ5OKET1hVJTzQbnrxtL89AoLneou6ex2j.'),
+(18, 'Testingdeletinglearnlist', 'Testingdeletinglearnlist', 'Testingdeletinglearnlist', '$2a$10$.JHVT5JvG2GTiIUE6IIyDefwIXOulN5iBYcIdp5Xtm5DRDwp0cT/m'),
+(19, 'Testingchangelearnlistname', 'Testingchangelearnlistname', 'Testingchangelearnlistname', '$2a$10$VJ9.AVQGp1QET/Xv5oVd7.xe8b.Fi4lMiKy9QLb2C1IzEvGFj8ywS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_learnlist`
+--
+
+CREATE TABLE `user_learnlist` (
+  `learnlist_id` int(11) NOT NULL,
+  `learnlist_name` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `learnlist_desc` varchar(255) NOT NULL,
+  `learnlist_likes` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_learnlist`
+--
+
+INSERT INTO `user_learnlist` (`learnlist_id`, `learnlist_name`, `user_id`, `learnlist_desc`, `learnlist_likes`) VALUES
+(1, 'Jackson\'s To-Learn List', 1, 'Some things my wife is telling me to learn to help around the house with DIY.', 8),
+(2, 'Revision for when I\'m bored', 2, 'I LOVE anything tech related!', 12),
+(3, 'Home Schooling', 3, 'I give this to my kids to learn at home.', 2),
+(4, 'My list!', 4, 'I am always open to learning new things!', 18),
+(5, 'I love learning.', 5, 'Collection of things I intend on learning eventually.', 12),
+(6, 'Test', 17, 'I am testing the create learnlist function here', NULL),
+(8, 'ThisShouldChangeLearnlistName', 19, 'Testingchangelearnlistname', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_learnlist_list`
+--
+
+CREATE TABLE `user_learnlist_list` (
+  `list_id` int(11) NOT NULL,
+  `learnlist_id` int(11) NOT NULL,
+  `resource_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_learnlist_list`
+--
+
+INSERT INTO `user_learnlist_list` (`list_id`, `learnlist_id`, `resource_id`) VALUES
+(1, 1, 21),
+(2, 1, 27),
+(3, 1, 29),
+(4, 1, 50),
+(5, 1, 44),
+(6, 1, 43),
+(7, 2, 1),
+(8, 2, 6),
+(9, 2, 7),
+(10, 2, 11),
+(11, 2, 18),
+(12, 2, 20),
+(13, 3, 31),
+(14, 3, 32),
+(15, 3, 37),
+(16, 3, 22),
+(17, 3, 25),
+(18, 3, 24),
+(19, 4, 6),
+(20, 4, 8),
+(21, 4, 5),
+(22, 4, 33),
+(23, 4, 31),
+(24, 4, 51),
+(25, 5, 14),
+(26, 5, 18),
+(27, 5, 20),
+(28, 5, 24),
+(29, 5, 29),
+(30, 5, 23),
+(31, 6, 1),
+(32, 6, 2),
+(33, 6, 3),
+(34, 6, 4);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `liked`
+--
+ALTER TABLE `liked`
+  ADD PRIMARY KEY (`liked_id`),
+  ADD KEY `user_id_to_user_id3` (`user_id`),
+  ADD KEY `learnlist_id_to_learnlist_id3` (`learnlist_id`);
+
+--
+-- Indexes for table `media_type`
+--
+ALTER TABLE `media_type`
+  ADD PRIMARY KEY (`media_id`);
+
+--
+-- Indexes for table `resource`
+--
+ALTER TABLE `resource`
+  ADD PRIMARY KEY (`resource_id`),
+  ADD KEY `topic_id_to_topic_id` (`topic_id`),
+  ADD KEY `media_id_to_media_id` (`media_id`);
+
+--
+-- Indexes for table `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `user_id_to_user_id2` (`user_id`),
+  ADD KEY `learnlist_id_to_learnlist_id2` (`learnlist_id`);
+
+--
+-- Indexes for table `topic`
+--
+ALTER TABLE `topic`
+  ADD PRIMARY KEY (`topic_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `user_learnlist`
+--
+ALTER TABLE `user_learnlist`
+  ADD PRIMARY KEY (`learnlist_id`),
+  ADD KEY `user_id_to_user_id` (`user_id`);
+
+--
+-- Indexes for table `user_learnlist_list`
+--
+ALTER TABLE `user_learnlist_list`
+  ADD PRIMARY KEY (`list_id`),
+  ADD KEY `learnlist_id_to_learnlist_id` (`learnlist_id`),
+  ADD KEY `resource_id_to_resource_id` (`resource_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `liked`
+--
+ALTER TABLE `liked`
+  MODIFY `liked_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `media_type`
+--
+ALTER TABLE `media_type`
+  MODIFY `media_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `resource`
+--
+ALTER TABLE `resource`
+  MODIFY `resource_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `topic`
+--
+ALTER TABLE `topic`
+  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `user_learnlist`
+--
+ALTER TABLE `user_learnlist`
+  MODIFY `learnlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `user_learnlist_list`
+--
+ALTER TABLE `user_learnlist_list`
+  MODIFY `list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `liked`
+--
+ALTER TABLE `liked`
+  ADD CONSTRAINT `learnlist_id_to_learnlist_id3` FOREIGN KEY (`learnlist_id`) REFERENCES `user_learnlist` (`learnlist_id`),
+  ADD CONSTRAINT `resource_id_to_resource_id2` FOREIGN KEY (`learnlist_id`) REFERENCES `resource` (`resource_id`),
+  ADD CONSTRAINT `user_id_to_user_id3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `resource`
+--
+ALTER TABLE `resource`
+  ADD CONSTRAINT `media_id_to_media_id` FOREIGN KEY (`media_id`) REFERENCES `media_type` (`media_id`),
+  ADD CONSTRAINT `topic_id_to_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`topic_id`);
+
+--
+-- Constraints for table `review`
+--
+ALTER TABLE `review`
+  ADD CONSTRAINT `learnlist_id_to_learnlist_id2` FOREIGN KEY (`learnlist_id`) REFERENCES `user_learnlist` (`learnlist_id`),
+  ADD CONSTRAINT `user_id_to_user_id2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `user_learnlist`
+--
+ALTER TABLE `user_learnlist`
+  ADD CONSTRAINT `user_id_to_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `user_learnlist_list`
+--
+ALTER TABLE `user_learnlist_list`
+  ADD CONSTRAINT `learnlist_id_to_learnlist_id` FOREIGN KEY (`learnlist_id`) REFERENCES `user_learnlist` (`learnlist_id`),
+  ADD CONSTRAINT `resource_id_to_resource_id` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`resource_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

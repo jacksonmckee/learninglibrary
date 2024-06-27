@@ -59,6 +59,9 @@
                             <p class="card-text"><%= learnlist.learnlist_desc %></p>
                             <p class="card-text"><%= learnlist.learnlist_likes %> Likes</p>
                             <a class="btn btn-primary" href="/likedlearnlist/<%= learnlist.learnlist_id %>">View</a>
+                            <form action="/unlike/ <%= learnlist.learnlist_id %>" method="POST">
+                                <button type="submit" class="btn btn-primary">Unlike</button>
+                            </form>
                         </div>
                     </div>
                 </div>
