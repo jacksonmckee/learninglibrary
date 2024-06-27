@@ -450,13 +450,15 @@ app.post("/newlearnlistname", (req, res) => {
     );
 });
 
+// Likes route //
+
 app.get("/likes", checkLogin, (req, res) => {
     const userId = req.session.userID;
 
     const query = `SELECT *
-                    FROM resource 
+                    FROM user_learnlist 
                     JOIN liked 
-                    ON resource.resource_id = liked.resource_id 
+                    ON user_learnlist.learnlist_id = liked.learnlist_id 
                     WHERE liked.user_id = ?`;
 
     db.query(query, [userId], (error, results, fields) => {
@@ -466,9 +468,9 @@ app.get("/likes", checkLogin, (req, res) => {
         }
 
     if (results.length === 0) {
-        console.log('No liked resources found for user:', userId);
+        console.log('No liked learnlists found for user:', userId);
     }
-        res.render("likes", { resourceData: results } );
+        res.render("likes", { learnlistData: results } );
     });
 
 });
