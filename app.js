@@ -475,6 +475,26 @@ app.get("/likes", checkLogin, (req, res) => {
 
 });
 
+// Viewing liked learnlists //
+
+app.get("/likedlearnlist/:learnlistId", checkLogin, (req, res) => {
+    const learnlistId = req.params.learnlistId;
+
+    const query = `SELECT *
+                    FROM resource
+                    JOIN user_learnlist_list
+                    ON resource.resource_id = user_learnlist_list.resource_id
+                    WHERE learnlist_id = ?`;
+                    
+    db.query(query, [learnlistId], (error, results, fields) => {
+        if (error){
+            console.error('Error fetching learnlist:', error);
+            return res.status(500).send('Error fetching learnlist.')
+        }
+        res.render("likedlearnlist", { resourceData: results });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

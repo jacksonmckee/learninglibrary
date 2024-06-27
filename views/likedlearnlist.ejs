@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearningLibrary - Your likes!</title>
+    <title>LearningLibrary - Liked Learnlist!</title>
 
     <!-- Bootstrap Stylesheet -->
 
@@ -47,18 +47,18 @@
         </div>
     </nav>
 
-    <!-- User's Liked Learnlists -->
+    <!-- Container displaying resources from liked learnlist -->
 
     <div class="container mt-5">
         <div class="row" id="resourceRow">
-            <% learnlistData.forEach((learnlist) => { %>
+            <% resourceData.forEach((resource) => { %>
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title"><%= learnlist.learnlist_name %></h5>
-                            <p class="card-text"><%= learnlist.learnlist_desc %></p>
-                            <p class="card-text"><%= learnlist.learnlist_likes %> Likes</p>
-                            <a class="btn btn-primary" href="/likedlearnlist/<%= learnlist.learnlist_id %>">View</a>
+                            <h5 class="card-title"><%= resource.resource_name %></h5>
+                            <p class="card-text"><%= resource.resource_desc %></p>
+                            <p class="card-text"><%= resource.resource_likes %> Likes</p>
+                            <a class="btn btn-primary" href="/resourcedetails/<%= resource.resource_id %>">View</a>
                         </div>
                     </div>
                 </div>
